@@ -1,0 +1,63 @@
+version: '3.9'
+
+services:
+
+  # ===================== ORACLE DATABASE =====================
+  oracle-db:
+    image: container-registry.oracle.com/database/express:21.3.0-xe
+    container_name: pibank-oracle
+    environment:
+      ORACLE_PWD: PiBank2026!Oracle
+      ORACLE_CHARACTERSET: AL32UTF8
+    ports:
+      - "1521:1521"
+      - "5500:5500"
+    volumes:
+      - oracle_data:/opt/oracle/oradata
+      - ./src/main/resources/db/init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD", "healthcheck.sh"]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+      start_period: 120s
+    networks:
+      - pibank-network
+
+  # ===================== PIBANK BACKEND =====================
+  pibank-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pibank-backend
+    depends_on:
+      oracle-db:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      DB_URL: jdbc:oracle:thin:@oracle-db:1521/XEPDB1
+      DB_USERNAME: pibank
+      DB_PASSWORD: PiBank2026!
+      JWT_SECRET: PiBankSuperSecretKeyForJWT2026MustBeAtLeast256BitsLong!@#$%
+      AES_KEY: PiBankAES256KeyForSensitiveData!@#
+      CORS_ALLOWED_ORIGINS: http://localhost:3000,http://localhost:5173
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./logs:/app/logs
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8080/api/v1/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    networks:
+      - pibank-network
+
+volumes:
+  oracle_data:
+    driver: local
+
+networks:
+  pibank-network:
+    driver: bridge

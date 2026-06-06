@@ -1,0 +1,111 @@
+# ============================================================
+# .gitignore — PiBank Backend
+# ============================================================
+
+# ===================== JAVA / MAVEN =====================
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+*.zip
+*.tar.gz
+*.rar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# Maven wrapper
+.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.properties
+
+# ===================== SPRING BOOT =====================
+application-local.yml
+application-local.properties
+
+# ===================== SEGURIDAD — NUNCA SUBIR =====================
+.env
+.env.local
+.env.production
+*.pem
+*.key
+*.p12
+*.jks
+keystore.p12
+truststore.p12
+secrets/
+credentials/
+
+# ===================== IDEs =====================
+# IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# Eclipse
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+# Visual Studio Code
+.vscode/
+*.code-workspace
+.settings.json
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+# ===================== SISTEMA OPERATIVO =====================
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msm
+*.msp
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+
+# ===================== LOGS =====================
+logs/
+*.log
+*.log.*
+
+# ===================== DOCKER =====================
+# No ignorar docker-compose.yml ni Dockerfile — son parte del proyecto
+
+# ===================== COBERTURA DE TESTS =====================
+/htmlReport/
+*.exec
+jacoco.exec
+
+# ===================== SONAR =====================
+.sonar/
+sonar-project.properties
