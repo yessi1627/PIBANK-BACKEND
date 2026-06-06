@@ -66,7 +66,6 @@ class FraudDetectionServiceTest {
     @DisplayName("Transacción de monto muy alto debe generar alerta de fraude")
     void evaluate_VeryHighAmount_ShouldCreateAlert() {
         when(transactionRepository.countRecentTransactionsByUser(any(), any())).thenReturn(1L);
-        when(fraudAlertRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
 
         BigDecimal score = fraudDetectionService.evaluateTransaction(
             testUser, testAccount, new BigDecimal("6000000"),
@@ -80,7 +79,6 @@ class FraudDetectionServiceTest {
     @DisplayName("Alta velocidad de transacciones debe aumentar el score de riesgo")
     void evaluate_HighVelocity_ShouldIncreaseScore() {
         when(transactionRepository.countRecentTransactionsByUser(any(), any())).thenReturn(15L);
-        when(fraudAlertRepository.save(any())).thenAnswer(inv -> inv.getArgument(0));
 
         BigDecimal score = fraudDetectionService.evaluateTransaction(
             testUser, testAccount, new BigDecimal("10000"),
