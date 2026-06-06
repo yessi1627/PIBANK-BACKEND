@@ -1,0 +1,34 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:pibank_test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    database-platform: org.hibernate.dialect.H2Dialect
+  flyway:
+    enabled: false
+
+pibank:
+  security:
+    jwt:
+      secret: TestSecretKeyForJWTPibankApplicationTestingOnly2026!
+      access-token-expiration: 900000
+      refresh-token-expiration: 604800000
+    max-failed-login-attempts: 5
+    account-lock-duration-minutes: 30
+    rate-limit:
+      requests-per-minute: 1000
+      requests-per-minute-auth: 1000
+  encryption:
+    aes-key: TestAESKeyForPibankApplicationTesting!
+  atm:
+    code-length: 6
+    expiration-minutes: 15
+  virtual-card:
+    cvv-rotation-minutes: 5
+  fraud:
+    suspicious-amount-threshold: 5000000
+    suspicious-location-enabled: false
