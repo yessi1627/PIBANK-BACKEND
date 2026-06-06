@@ -1,0 +1,17 @@
+spring:
+  jpa:
+    show-sql: false
+
+logging:
+  level:
+    root: WARN
+    com.pibank: INFO
+    org.springframework.security: WARN
+
+server:
+  ssl:
+    enabled: true
+
+pibank:
+  fraud:
+    suspicious-location-enabled: true
